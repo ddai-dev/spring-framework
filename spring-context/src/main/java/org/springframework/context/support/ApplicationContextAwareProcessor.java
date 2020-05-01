@@ -99,6 +99,7 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 		return bean;
 	}
 
+	// 在 BeanFactory 的基础上, ApplicationBeanFactory 增加了一些 Aware 接口
 	private void invokeAwareInterfaces(Object bean) {
 		if (bean instanceof Aware) {
 			if (bean instanceof EnvironmentAware) {
