@@ -113,6 +113,8 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 							}
 							beforeSingletonCreation(beanName);
 							try {
+								// AbstractAutowireCapableBeanFactory#postProcessObjectFromFactoryBean
+								//  -> applyBeanPostProcessorsAfterInitialization(object, beanName)
 								object = postProcessObjectFromFactoryBean(object, beanName);
 							}
 							catch (Throwable ex) {
