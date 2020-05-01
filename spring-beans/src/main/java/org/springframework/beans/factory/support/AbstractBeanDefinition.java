@@ -38,6 +38,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * 在配置文件中可以定义父 bean 和 子 bean, 父 bean 用 RootBeanDefinition 表示, 子 bean 用 ChildBeanDefinition
+ * 在配置文件中没有父子关系的 bean
  * Base class for concrete, full-fledged {@link BeanDefinition} classes,
  * factoring out common properties of {@link GenericBeanDefinition},
  * {@link RootBeanDefinition}, and {@link ChildBeanDefinition}.
@@ -147,6 +149,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	private boolean lazyInit = false;
 
+	// 自动注入模式, 对应 bean 属性 autowire
 	private int autowireMode = AUTOWIRE_NO;
 
 	private int dependencyCheck = DEPENDENCY_CHECK_NONE;
@@ -154,6 +157,10 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private String[] dependsOn;
 
+	/**
+	 * 设置为 false , 这样容器在查找自动装配对象时, 将不考虑该 bean
+	 * 它不会被考虑作为其它 bean 自动装配的候选者, 但是该 bean 本身还是可以使用自动装配来注入其它 bean 的
+ 	 */
 	private boolean autowireCandidate = true;
 
 	private boolean primary = false;
@@ -171,15 +178,19 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	private String factoryBeanName;
 
 	@Nullable
+	// 对应 bean 属性 factory-method
 	private String factoryMethodName;
 
 	@Nullable
+	// constructor-arg
 	private ConstructorArgumentValues constructorArgumentValues;
 
 	@Nullable
+	// 普通属性集合
 	private MutablePropertyValues propertyValues;
 
 	@Nullable
+	// lookup-method replaced-method
 	private MethodOverrides methodOverrides;
 
 	@Nullable
@@ -192,6 +203,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	private boolean enforceDestroyMethod = true;
 
+	// 是否是用户定义的而不是应用程序本身定义的, 创建 AOP 时候为 true
 	private boolean synthetic = false;
 
 	private int role = BeanDefinition.ROLE_APPLICATION;
